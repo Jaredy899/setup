@@ -172,7 +172,7 @@ $selectedIndex = 0
 while ($true) {
     Write-Host ""
     Write-Host "${Cyan}  Windows Setup Menu${Reset}"
-    Write-Host "${Gray}  Use arrow keys, Enter to select${Reset}"
+    Write-Host "${Gray}  Arrows or j/k to move, Enter to select, q to quit${Reset}"
     Write-Host ""
     
     for ($i = 0; $i -lt $options.Length; $i++) {
@@ -186,11 +186,23 @@ while ($true) {
     $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
     switch ($key.VirtualKeyCode) {
+        81 { # Q
+            Write-Host "${Blue}Goodbye!${Reset}"
+            exit
+        }
         38 { # Up
             $selectedIndex--
             if ($selectedIndex -lt 0) { $selectedIndex = $options.Length - 1 }
         }
+        75 { # K (vim up)
+            $selectedIndex--
+            if ($selectedIndex -lt 0) { $selectedIndex = $options.Length - 1 }
+        }
         40 { # Down
+            $selectedIndex++
+            if ($selectedIndex -ge $options.Length) { $selectedIndex = 0 }
+        }
+        74 { # J (vim down)
             $selectedIndex++
             if ($selectedIndex -ge $options.Length) { $selectedIndex = 0 }
         }
